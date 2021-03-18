@@ -1,0 +1,292 @@
+<div class="app" [ngClass]="
+    {
+        'is-collapsed': app.layout.isMenuCollapsed,
+        'is-opened': app.layout.isMenuOpened,
+        'rtl' : app.layout.rtlActived
+    }">
+    <div *ngIf="mostrarDatos" class="layout header-info">
+
+        <div [ngClass]="sidenavSelected">
+
+            <!-- Page Container START -->
+            <div class="page-container casocajero ">
+
+                <!-- Top Nav START -->
+
+                <!-- <div class="header navbar ">
+                    <div class="">
+                    </div>
+                </div> -->
+
+
+
+
+                <nav class="navbar navbar-expand-lg  bg-primary navbar-light navbar-dark">
+                    <!--   <a class="navbar-brand mr-auto" href="#">Navbar</a> -->
+                    <a class="navbar-brand mr-auto" href="#">
+                        <img src="assets/images/logo/logo-white.png" class="d-inline-block align-top" alt="" />
+                    </a>
+                    <div>
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                      </button>
+
+                        <div class="navbar" id="navbarSupportedContent">
+                            <ul class="navbar-nav mr-auto">
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{user.Nombre}}
+                      </a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+
+                                        <a class="dropdown-item" href="javascript:void(0);" (click)="salir()">
+                                            <i class="ti-power-off pdd-right-10"></i>
+                                            <span>Cerrar Sesión</span>
+                                        </a>
+                                    </div>
+                                </li>
+                            </ul>
+
+                        </div>
+                    </div>
+
+                </nav>
+
+
+
+
+
+
+
+
+                <!--    <div class="side-panel" [ngClass]="{'side-panel-open' : app.layout.sidePanelOpen}">
+                    <div class="side-panel-wrapper bg-white">
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link" href="#perfil" role="tab" data-toggle="tab">
+                                    <span>Mi Perfil</span>
+                                </a>
+                            </li>
+                            <li class="panel-close">
+                                <a class="side-panel-toggle" href="javascript:void(0);" (click)="app.layout.sidePanelOpen = !app.layout.sidePanelOpen">
+                                    <i class="ti-close"></i>
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <div id="perfil" role="tabpanel" class="tab-pane fade in active">
+                                <div class="profile scrollable">
+                                    <div class="pdd-horizon-20 pdd-top-20">
+                                        <div class="border bottom">
+                                            <div class="text-center mrg-top-20">
+                                                <div class="row">
+                                                    <div class="col-6 ml-auto mr-auto text-center">
+                                                        <img *ngIf="user.Imagen==''" class="img-fluid border-radius-round" src="assets/images/user.jpg" alt="">
+                                                        <img *ngIf="user.Imagen!=''" class="img-fluid border-radius-round" src="{{globales.ruta}}IMAGENES/FUNCIONARIOS/{{user.Imagen}}" alt="">
+                                                    </div>
+                                                </div>
+                                                <h4 class="mrg-top-20">{{user.Nombres.split(" ")[0]}} {{user.Apellidos.split(" ")[0]}}</h4>
+                                                <span class="">{{NombreOficina}} <br> ({{NombreCaja}})</span>
+                                            </div>
+                                            <div class="row text-center pdd-vertical-20 ">
+                                                <div class="col-sm-12">
+                                                    <div class="row">
+                                                        <div class="col-sm-12 col-xs-12 border top">
+                                                            <h4 class="mt-1">Mis Saldos</h4>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-6 border right" *ngFor="let item of consolidadosService.TotalRestaIngresosEgresos">
+                                                            <div class="pdd-vertical-10">
+                                                                <span class="font-size-18 text-dark">{{  item.saldo | currency:' ' }}</span><br>
+                                                                <small>{{ item.cod  }}</small>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="pdd-horizon-20 pdd-top-20">
+                                        <div class="border bottom">
+                                            <h5 class="text-dark mrg-btm-20">Acciones</h5>
+                                            <ul class="list-unstyled list-link font-size-16 pdd-btm-20">
+                                                <li *ngIf="user.Id_Perfil == 3 || user.Id_Perfil == 2 || user.Id_Perfil == 6">
+                                                    <a [routerLink]="[ '/consolidado', user.Identificacion_Funcionario ]" routerLinkActive="active">
+                                                        <i class="fa fa-clipboard pdd-right-10"></i>
+                                                        <span>Consolidado Movimientos</span>
+                                                    </a>
+                                                </li>
+                                                <li *ngIf="user.Id_Perfil == 3 || user.Id_Perfil == 2 || user.Id_Perfil == 6">
+                                                    <a href="javascript:void(0);" *ngIf="!OcultarConsultor" (click)="VerificarAntesDeCierre()">
+                                                        <i class="fa fa-lock pdd-right-10"></i>
+                                                        <span>Cierre de Caja</span>
+                                                        <span class="label label-warning mrg-left-5"><i
+                                class="fa fa-exclamation-triangle"></i></span>
+                                                    </a>
+                                                </li>
+                                             
+                                
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+ -->
+
+
+
+
+
+                <!-- Content Wrapper START -->
+                <div class="main-content" style="padding: 30px 70px;">
+                    <router-outlet></router-outlet>
+                </div>
+                <!-- Content Wrapper END -->
+
+                <!-- Footer START -->
+                <footer class="content-footer">
+                    <div class="footer">
+                        <div class="copyright">
+                            <span>Todos los Derechos Reservados © 2018 | Grupo Empresarial H&M</span>
+                            <span class="go-right">
+                <a href="https://corvuslab.co" target="_blank" class="text-gray mrg-right-15">Desarrollo
+                  de CorvusLab SAS</a>
+              </span>
+                        </div>
+                    </div>
+                </footer>
+                <!-- Footer END -->
+
+            </div>
+            <!-- Page Container END -->
+        </div>
+    </div>
+    <div *ngIf="!mostrarDatos" class="cargando-sin-datos">
+        <img src="assets/images/cargando-interna.gif" style="width:600px;">
+        <h3>{{ fraseCargando }}...</h3>
+    </div>
+</div>
+
+
+<swal #errorSwal title="" text="" type="">
+</swal>
+
+<swal #mensajeSwal title="" text="" type="" html="">
+</swal>
+
+<swal #macSwal title="" text="" type="" html="" [showCancelButton]="false" [showConfirmButton]="false" [allowOutsideClick]="false">
+</swal>
+
+
+
+<swal #alertSwal type="" title="" text=""></swal>
+
+<ng2-toasty [position]="'bottom-right'"></ng2-toasty>
+
+
+<!-- 
+<div class="header navbar ">
+  <div class="header-container">
+      <ul class="nav-left">
+          <li>
+              <a *ngIf="!OcultarCajero" class="side-nav-toggle" href="javascript:void(0);" (click)="app.layout.isMenuCollapsed = !app.layout.isMenuCollapsed">
+                  <i class="fa fa-bars"></i>
+              </a>
+              <a *ngIf="OcultarCajero" href="" [routerLink]="['/tablero']" class="logo logo-dark">
+                  <img src="assets/images/logo/logo-white.png" />
+              </a>
+          </li>
+          <li class="d-flex justify-content-center h-100 hm-100 text-center user-profile" style="box-sizing: border-box;">
+              <div class="text-center pr-2 pt-2 user-info">
+                  <p class="m-0 text-white">{{ myDate | date:'dd/MM/yyyy' }}</p>
+                  <p class="m-0 text-white">{{ myDate | date:'HH:mm:ss' }}</p>
+              </div>
+          </li>
+        
+      </ul>
+      <ul class="nav-right">
+          <li class="user-profile dropdown">
+              <a href="" class="dropdown-toggle" data-toggle="dropdown">
+                  <ng-template [ngIf]=" user.Imagen == '' " [ngIfElse]="loggedOut">
+                      <img class="profile-img img-fluid" src="assets/images/user.jpg" alt="">
+                  </ng-template>
+                  <ng-template #loggedOut>
+                      <img class="profile-img img-fluid" src="{{globales.ruta}}IMAGENES/FUNCIONARIOS/{{user.Imagen}}" alt="">
+                  </ng-template>
+                  <div class="user-info">
+                      <span class="name pdd-right-5">{{user.Nombre}}
+                          </span>
+                      <i class="ti-angle-down font-size-10"></i>
+                  </div>
+              </a>
+              <ul class="dropdown-menu">
+                  <li>
+                      <a href="javascript:void(0);" (click)="app.layout.sidePanelOpen = !app.layout.sidePanelOpen">
+                          <i class="ti-settings pdd-right-10"></i>
+                          <span>Mi Perfil
+    </span>
+                      </a>
+                  </li>
+                  <li role="separator" class="divider"></li>
+                  <li>
+                      <a href="javascript:void(0);" (click)="salir()">
+                          <i class="ti-power-off pdd-right-10"></i>
+                          <span>Cerrar Sesión</span>
+                      </a>
+                  </li>
+              </ul>
+          </li>
+          <li class="notifications dropdown">
+              <span class="counter">{{  counter }}</span>
+              <a href="" class="dropdown-toggle" data-toggle="dropdown">
+                  <i class="fa fa-refresh"></i>
+              </a>
+
+              <ul class="dropdown-menu ">
+                  <li class="notice-header">
+                      <i class="ti-bell pdd-right-10"></i>
+                      <span>Traslados Recibidos</span>
+                  </li>
+                  <li>
+                      <ul class="list-info overflow-y-auto relative scrollable">
+                          <li *ngFor="let alerta of  _notificacionService.alertasCajas">
+                              <a href="#{{alerta.Component}}" scrollTo (click)="muestra_tabla(alerta.Component)">
+                                  <img class="thumb-img" *ngIf="alerta.Imagen ==''" src="assets/images/user.jpg" alt="">
+                                  <img class="thumb-img" *ngIf=" alerta.Imagen != '' " src="{{globales.ruta}}IMAGENES/FUNCIONARIOS/{{alerta.Imagen}}" alt="">
+                                  <div class="info">
+                                      <span class="title">
+
+            <span class="font-size-14 text-semibold">{{alerta.NombreFuncionario}}
+            </span>
+                                      <span class="text-gray"> Le ha realizado un {{alerta.tipo}} por </span>
+                                      <span class="font-size-14 text-semibold">{{alerta.Valor }}</span>
+                                      <span class="text-gray"> con código </span>
+                                      <span class="font-size-14 text-semibold">{{alerta.Codigo}}
+            </span>
+                                      </span>
+                                      <span class="sub-title">{{alerta.Fecha_Traslado | date: 'hh:mm' }}</span>
+                                  </div>
+                              </a>
+                          </li>
+                      </ul>
+                  </li>
+                  <li class="notice-footer">
+                      <span>
+    <a href="#traslados" scrollTo (click)="muestra_tabla('traslados')" class="text-gray">Ver Todos los
+      Traslados <i class="ei-right-chevron pdd-left-5 font-size-10"></i></a>
+  </span>
+                  </li>
+              </ul>
+          </li>
+          <li>
+              <a class="side-panel-toggle" href="javascript:void(0);" (click)="app.layout.sidePanelOpen = !app.layout.sidePanelOpen">
+                  <i class="ti-align-right"></i>
+              </a>
+          </li>
+      </ul>
+  </div>
+</div> -->

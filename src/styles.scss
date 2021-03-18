@@ -1,0 +1,138 @@
+/* You can add global styles to this file, and also import other style files */
+
+// @import '../node_modules/ng2-toasty/bundles/style-bootstrap.css';
+.btn-xs {
+    font-size: 10px !important;
+    padding: 3px !important;
+}
+
+.btn-superior {
+    font-size: 14px !important;
+    padding: 7px !important;
+}
+
+.bg-anulada {
+    font-weight: bold !important;
+    color: red;
+}
+
+.bg-devuelta {
+    background-color: #f0973e !important;
+    color: white;
+}
+
+.bg-inactive {
+    background-color: #ffc8c8 !important;
+}
+
+.bg-selected {
+    background-color: rgba(48, 238, 15, 0.4) !important;
+}
+
+.ng-valid[required],
+.ng-valid.required {
+    border-left: 5px solid #42A948;
+    /* green */
+}
+
+.ng-invalid:not(form) {
+    border-left: 5px solid #a94442;
+    /* red */
+}
+
+.table-filters {
+    padding: .5px !important;
+    font-size: 10px;
+    color: rgba(190, 190, 190, .6);
+    input {
+        font-size: 14px;
+        color: rgba(61, 61, 61, 0.8);
+    }
+}
+
+.custom-thead {
+    padding: 0px !important;
+    font-size: 13.5px;
+    font-weight: bold;
+    color: black;
+    text-align: center;
+}
+
+.custom-cell {
+    padding: 0px !important;
+    font-size: 11px;
+}
+
+.block-element {
+    display: block;
+}
+
+//ANIMACIONES
+@keyframes pulse {
+    0% {
+        -moz-box-shadow: 0 0 0 0 rgba(204, 169, 44, 0.4);
+        box-shadow: 0 0 0 0 rgba(204, 169, 44, 0.4);
+    }
+    70% {
+        -moz-box-shadow: 0 0 0 10px rgba(204, 169, 44, 0);
+        box-shadow: 0 0 0 10px rgba(204, 169, 44, 0);
+    }
+    100% {
+        -moz-box-shadow: 0 0 0 0 rgba(204, 169, 44, 0);
+        box-shadow: 0 0 0 0 rgba(204, 169, 44, 0);
+    }
+}
+
+.accionable {
+    cursor: pointer;
+}
+
+select {
+    width: 100% !important;
+    margin: 0 !important;
+}
+
+.form-control-sm {
+    font-size: 11px !important;
+    padding: 2px 5px !important;
+    height: 22px !important;
+    border-radius: 5px !important;
+}
+
+.tabla-cajero {
+    font-size: 15px;
+    th,
+    td {
+        padding: 10px;
+        vertical-align: middle;
+        line-height: 1;
+    }
+}
+
+.cell-cajero {
+    padding: 10px;
+    vertical-align: middle;
+    line-height: 1;
+}
+
+.input-font {
+    font-size: 14px;
+}
+
+.clean-btn-table {
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    border: none;
+    color: #888da8;
+}
+
+.full-width-select {
+    width: 100% !important;
+}
+
+.menu-link-active {
+    color: #0f9aee !important;
+}
+/* Importing Bootstrap SCSS file. */
+@import '~bootstrap/scss/bootstrap';

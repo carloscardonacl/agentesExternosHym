@@ -1,0 +1,61 @@
+<div class="authentication">
+    <div class="sign-in-2">
+        <div class="container-fluid no-pdd-horizon bg" style="background-image: url('assets/images/others/img-30.jpg')">
+            <div class="row">
+                <div class="col-md-10 mr-auto ml-auto">
+                    <div class="row">
+                        <div class="mr-auto ml-auto full-height height-100">
+                            <div class="vertical-align full-height">
+                                <div class="table-cell">
+                                    <div *ngIf="Error" class="alert alert-danger">
+                                        <strong>ERROR</strong> {{this.Mensaje}}
+                                    </div>
+                                    <div *ngIf="Exito" class="alert alert-success">
+                                        <strong>EXITOSO</strong> {{this.Mensaje}}
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="pdd-horizon-30 pdd-vertical-30">
+                                                <div class="mrg-btm-30 text-center">
+                                                    <img class="img-responsive inline-block" src="assets/images/logo/logo.png" alt=" Logo HyM"><br>
+                                                    <h2 class="inline-block no-mrg-vertical pdd-top-15">Iniciar Sesión</h2>
+                                                </div>
+                                                <p class="mrg-btm-15 font-size-13">Por Favor Ingrese su Usuario y Clave para iniciar sesión</p>
+                                                <form #FormLogin="ngForm" class="ng-pristine ng-valid" (ngSubmit)="onSubmit(Username.value, Password.value, Oficina.value, Caja.value)">
+                                                    <div class="form-group">
+                                                        <input type="number" class="form-control" name="Username" placeholder="Identificacion" #Username ngModel required>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <input type="password" class="form-control" name="Password" placeholder="Contraseña" #Password ngModel required>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <input hidden type="number" class="form-control" name="Oficina" placeholder="Num Oficina" #Oficina ngModel>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <input hidden type="number" class="form-control" name="Caja" placeholder="Num Caja" #Caja ngModel>
+                                                    </div>
+                                                    <div class="pull-right">
+                                                        <!-- Inicio   -->
+                                                        <!--  <a class="text-right f-w-600 text-inverse" [swal]="{ type : 'question', title:'Restablecer Contraseña', text: 'Por favor ingrese su número de Identificación, de esa manera restableceremos su contraseña', input: 'number', showCancelButton : true , confirmButtonText : 'Restablecer Contraseña', cancelButtonText : 'Cancelar' }"
+                                                            (confirm)="saveIdentificacion($event)">
+                               Recuperar Contraseña</a> -->
+                                                    </div>
+                                                    <!-- Fin   -->
+                                                    <div class="pull-left mrg-top-20 text-right">
+                                                        <button type="submit" class="btn btn-info" [disabled]="!FormLogin.valid">Iniciar Sesión</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 
+<swal #confirmacionSwal title="" text="" type=""></swal> -->

@@ -1,0 +1,122 @@
+<div class="row">
+
+    <div class="col-12">
+
+        <div class="card">
+
+            <div class="card-header header-modulos">
+                <div class="row">
+                    <div class="col-md-6">
+                        <ul class="list-unstyled list-info">
+                            <li>
+                                <span class="thumb-img pdd-top-10">
+                                    <i class="ti-control-shuffle text-primary font-size-30"></i>
+                                </span>
+                                <div class="info">
+                                    <b class="text-dark font-size-22"> Historial de pagos registrados</b>
+                                    <p class="no-mrg-btm ">A HYM</p>
+                                </div>
+                            </li>
+
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <button (click)="ModalPago.show()" class="btn btn-primary float-right mrg-top-10 btn-superior"><i class="fa fa-plus"></i>
+                            Agregar pago </button>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="card-body mt-2">
+                <div class="col-12 mb-3 mt-0">
+                    <h5> Cupo : {{Cupo.Cupo | currency}} </h5>
+                    <h5> Usado : {{ Cupo.Cupo_Usado| currency }} </h5>
+                    <h5> Disponible : {{ (Cupo.Cupo - Cupo.Cupo_Usado) | currency }} </h5>
+                </div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Código</th>
+                            <th>Fecha</th>
+                            <th>Valor</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngIf="Cargando">
+                            <td colspan="4" class="text-center">
+                                <div style="text-align: center; margin-top:10px; margin-bottom:10px;">
+                                    <h2>CARGANDO REGISTROS...</h2>
+                                    <!--          <img src="{{RutaGifCargando}}" style="width:250px;" alt="CARGANDO"> -->
+                                </div>
+                            </td>
+                        </tr>
+                        <tr *ngIf="pagos.length == 0 && !Cargando">
+                            <td colspan="9" class="text-center">
+                                <i class="ti-alert font-size-20 text-warning"></i>
+                                <h4>No hay RecibosTransferencia para mostrar!</h4>
+                            </td>
+                        </tr>
+                        <tr *ngFor="let pago of pagos" [ngClass]="{ 'text-danger' : pago.Estado == 'Rechazado' , 'text-success': pago.Estado == 'Aprobado' }">
+                            <td>{{pago.Id_Pago_Cupo_Agente_Externo }}</td>
+                            <td>{{pago.Fecha | date}}</td>
+                            <td>{{pago.Valor | currency}}</td>
+                            <td>{{pago.Estado }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="d-flex justify-content-between">
+            <button [routerLink]="['/main']" class="btn btn-danger float-right mrg-top-10 btn-superior"><i class="fa fa-chevron-left"></i>
+                volver </button>
+            <ngb-pagination [(page)]="currentPage" [pageSize]="limit" [collectionSize]="numReg" (pageChange)="GetRegistroPagos()">
+                ></ngb-pagination>
+        </div>
+    </div>
+</div>
+
+<app-modal-basic #ModalPago>
+    <div class="app-modal-header">
+        <h4 class="modal-title titulo">Agregar pago</h4>
+        <button type="button" class="close basic-close" (click)="ModalPago.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    </div>
+    <div class="app-modal-body">
+        <form #pago="ngForm">
+            <div class="form-row">
+                <div class="col-md-6">
+                    <label>Valor</label>
+                    <input type="text" name="Id_Transferencia_Remitente" id="Id_Transferencia_Remitente" class="form-control" [(ngModel)]="Pago.Valor" required currencyMask [options]="{thousands: '.' , decimal: '.' , precision:'0'}">
+
+                </div>
+                <div class="col-md-6">
+                    <label for="telefono">Recibo</label>
+                    <input type="text" name="Telefono" id="telefono" class="form-control" [(ngModel)]="Pago.Recibo" required>
+                </div>
+            </div>
+
+
+
+            <div class="form-row">
+
+                <div class="col-md-12">
+                    <label for="telefono">Observación</label>
+                    <input type="text" name="Telefono" id="telefono" class="form-control" [(ngModel)]="Pago.Observacion" required>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="app-modal-footer">
+        <div class="text-right">
+            <button type="button" class="btn btn-outline-danger btn-rounded btn-xs" (click)="ModalPago.hide()">Cancelar</button>
+            <button type="button" class="btn btn-outline-primary btn-rounded btn-xs" [swal]="{title:'¿Está Seguro?',text : 'Se va a registrar el pago' , type:'warning', showCancelButton: true, confirmButtonText: 'Si, Actualizar', cancelButtonText:'No, Comprobar!'}"
+                (confirm)="GuardarPago()" [disabled]="!pago.valid">Guardar
+      </button>
+        </div>
+    </div>
+</app-modal-basic>
+
+<swal #confirmSwal title="" text="" type=""></swal>

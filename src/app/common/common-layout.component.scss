@@ -1,0 +1,93 @@
+.cargando-sin-datos {
+    text-align: center;
+    padding-top: 150px;
+    background: #ffffff;
+    height: 100vh;
+    display: inline-block;
+    width: 100vw;
+}
+
+.user-profile {
+    border-right: 1px solid #c8cfd8 !important;
+    min-height: 65px !important;
+}
+
+.casocajero {
+    padding-left: 0 !important;
+}
+
+.header2 {
+    width: 100% !important;
+}
+
+.linea2 {
+    width: 150px;
+    label {
+        line-height: 20px;
+        display: inline-block;
+        width: 40px;
+        margin: 0;
+    }
+    input {
+        font-weight: normal;
+        text-align: right;
+        line-height: 16px;
+        font-size: 12;
+        margin: 0;
+        width: 25%;
+    }
+}
+
+.vl {
+    border-right: 1px solid rgb(196, 196, 196);
+    height: 4.6em;
+}
+
+input {
+    font-weight: normal;
+    text-align: right;
+    line-height: 16px;
+    font-size: 12;
+    margin: 0;
+    width: 35px;
+    .Moneda {
+        width: 100px !important;
+    }
+}
+
+.table th,
+.table td {
+    padding: 0 2px;
+}
+
+label {
+    font-size: 12px;
+}
+
+.normal {
+    height: 50px;
+    width: 96%;
+    max-width: none;
+    min-width: inherit;
+    padding: 10px;
+    background: rgba(213, 213, 213, 0.2) !important;
+    border-radius: 3px;
+    box-shadow: none !important;
+    font-size: 14px;
+    line-height: 14px;
+    color: #000000;
+    text-shadow: none;
+    text-align: left;
+}
+
+.moneda {
+    width: 50%;
+    float: left;
+}
+
+.detalles {
+    background: #f8f8f8;
+    display: inline-block;
+    border-radius: 3px;
+    margin-top: 4px;
+}

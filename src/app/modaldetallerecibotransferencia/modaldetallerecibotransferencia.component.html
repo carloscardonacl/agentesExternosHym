@@ -1,0 +1,462 @@
+<app-modal-basic [dialogClass]="'modal-lg'" id="ModalVerRecibo" #ModalVerRecibo>
+
+
+    <div class="app-modal-body ">
+
+        <div class=" col-md-7 ml-4 ">
+
+            <img class="text-center mb-3 " style="display: block;" src="assets/images/logo/logo.png" alt="">
+            <span class=" text-left" style="font-size: 0.7em; font-weight: 700; display: block;">{{infoCompany.Nombre_Empresa}}</span>
+            <span class=" text-left" style="font-size: 0.7em; font-weight: 700; display: block;">NIT
+          {{infoCompany.NIT}}</span>
+            <span class=" text-left" style="font-size: 0.7em; font-weight: 700; display: block;">
+          {{infoCompany.Direccion}}</span>
+            <span class=" text-left" style="font-size: 0.7em; font-weight: 700; display: block;">Tel
+          {{infoCompany.Telefono}}</span>
+            <span class=" text-left" style="font-size: 0.7em; font-weight: 700; display: block;">Cel
+          {{infoCompany.Celular}}</span>
+        </div>
+
+        <div class="col-md-3 mt-5 ">
+            <span class="text-center" style="font-size: 1em; font-weight: 700; display: block;">Recibo de Transferencia
+        </span>
+            <span class="text-center" style="font-size: 0.7em; font-weight: bolder; display: block;">{{Transferencia.CodigoRecibo}}</span>
+
+            <span class="text-center" style="font-size: 0.7em; font-weight: bolder; display: block;">Fecha:
+          {{Transferencia.Fecha}} </span>
+        </div>
+
+
+        <div class="mb-2 mt-4 card py-3" style="display:block">
+            <div class="col-md-3" style="font-size: 0.9em;"> Remitente </div>
+            <div class="col-md-8 text-right"> <span style="font-size: 0.9em; font-weight: bolder;">
+            {{Transferencia.Remitente}} </span>
+            </div>
+
+            <div class="col-md-3" style="font-size: 0.9em;"> Documento </div>
+            <div class="col-md-8 text-right"> <span style="font-size: 0.9em; font-weight: bolder;">
+            {{Transferencia.Documento_Origen}} </span>
+            </div>
+
+            <div class="col-md-3" style="font-size: 0.9em;"> Forma de pago </div>
+            <div class="col-md-8 text-right"> <span style="font-size: 0.9em; font-weight: bolder;">
+            {{Transferencia.Forma_Pago}} </span>
+            </div>
+        </div>
+
+
+        <div class="col-md-12">
+            <span class="text-center mt-3" style="font-size: 1em; font-weight: 700; display: block;">Destinatarios
+        </span>
+        </div>
+
+
+        <div class="mb-3 card" style="display:block">
+            <div class="col-md-12">
+                <div class="invoicelist-body">
+                    <table>
+                        <thead>
+                            <th class="custom-thead">Identificacion</th>
+                            <th class="custom-thead">Nombre</th>
+                            <th class="custom-thead">Cuenta Destinatario</th>
+                            <th class="custom-thead">Transferido</th>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let d of DestinatariosTransferencia">
+                                <td class="text-center"><span style="font-size: 0.8em;">{{d.Id_Destinatario}}</span></td>
+                                <td class="text-center"><span style="font-size: 0.8em;">{{d.Nombre_Destinatario}}</span></td>
+                                <td class="text-center"><span style="font-size: 0.8em;">{{d.Numero_Cuenta_Destinatario |
+                      mask:'0000-0000-0000-0000-0000'}}</span></td>
+                                <td class="text-right">
+                                    <span style="font-size: 0.8em;">
+                      {{d.Valor_Transferencia | customcurrency:Transferencia.Codigo_Moneda_Destino}}
+                    </span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="invoicelist-footer">
+
+            <table style="width: 50%;">
+                <tr class="taxrelated">
+                    <td>Recibido: </td>
+                    <td>{{Transferencia.Cantidad_Recibida | customcurrency:Transferencia.Codigo_Moneda_Origen}}
+                    </td>
+                </tr>
+                <tr class="taxrelated">
+                    <td>Tasa: </td>
+                    <td>{{Transferencia.Tasa_Cambio}}</td>
+                </tr>
+                <tr>
+                    <td><strong>Transferido:</strong></td>
+                    <td id="total_price" style="font-weight: bolder; font-size: 1em;">
+                        {{Transferencia.Monto_Transferido | customcurrency:Transferencia.Codigo_Moneda_Destino}}
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+
+        <!-- <button type="button" class="btn btn-default btn-rounded btn-sm" (click)="ModalVerRecibo.hide()">Cerrar</button> -->
+
+        <div class="clearfix">
+            <!-- <a href="#" class="alert-link">Summary:Its some description.......testtesttest</a> -->
+            <button type="button" class="btn btn-outline-danger btn-lg pull-right" (click)="ModalVerRecibo.hide()">Cerrar</button>
+        </div>
+
+        <!-- <div class="app-modal-header" style="cursor: pointer;" (click)="ModalVerRecibo.hide()">
+        <button type="button" class="close basic-close">
+        <span aria-hidden="true">&times;</span>
+        </button>
+      </div> -->
+
+    </div>
+
+</app-modal-basic>
+
+
+<!-- <div> -->
+
+<!-- <table>
+          <tr>
+            <td>
+              <span class="font-weight-bold" style="font-size: 0.8em;">{{infoCompany.Nombre_Empresa}}</span>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label class="font-weight-bold" style="font-size: 0.8em;">{{infoCompany.Nombre_Empresa}}</label>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label class="font-weight-bold" style="font-size: 0.8em;">{{infoCompany.Nombre_Empresa}}</label>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label class="font-weight-bold" style="font-size: 0.8em;">{{infoCompany.Nombre_Empresa}}</label>
+            </td> -->
+<!-- </tr> -->
+<!-- <label class="font-weight-bold" style="font-size: 0.8em;">{{infoCompany.NIT}}</label>
+          <label class="font-weight-bold" style="font-size: 0.8em;">{{infoCompany.Direccion}}</label>
+          <label class="font-weight-bold" style="font-size: 0.8em;">{{infoCompany.Telefono}}</label>
+          <label class="font-weight-bold" style="font-size: 0.8em;">{{infoCompany.Celular}}</label> -->
+<!-- </table> -->
+
+<!-- <table>
+          <tr>
+            <td>Recibido: </td>
+          </tr>
+          <tr>
+            <td>Tasa: </td>
+          </tr>
+          <tr>
+            <td>`
+              <strong>Transferido:</strong>
+            </td>
+          </tr>
+        </table> -->
+<!-- </div> -->
+
+<!-- <div class="row  mb-3" style="display:block">
+        <div class="col-12">
+          <div class="invoicelist-body">
+            <label class="font-weight-bold" style="font-size: 0.8em;">{{infoCompany.Nombre_Empresa}}</label>
+            <label class="font-weight-bold" style="font-size: 0.8em;">{{infoCompany.NIT}}</label>
+            <label class="font-weight-bold" style="font-size: 0.8em;">{{infoCompany.Direccion}}</label>
+            <label class="font-weight-bold" style="font-size: 0.8em;">{{infoCompany.Telefono}}</label>
+            <label class="font-weight-bold" style="font-size: 0.8em;">{{infoCompany.Celular}}</label>
+          </div>
+        </div>
+      </div> -->
+
+
+
+
+<!-- <div class="app-modal-footer">
+      <div class="text-right">
+      </div>
+    </div> -->
+
+<!-- <div class="app-modal-header">
+      <div class="control-bar">
+        <div class="container">
+          <button type="button" class="close basic-close" (click)="ModalVerRecibo.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <div class="row">
+            <div class="slogan col-6">Recibo de Transferencia {{Transferencia.CodigoRecibo}} </div>
+            <div class="slogan col-6 ">Fecha: {{Transferencia.Fecha}} </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <div class="app-modal-body">
+  
+  
+      <div class="row section mb-3" style="display:block">
+        <div class="col-12 text-center my-3">
+          <h4>Detalle del Recibo</h4>
+        </div>
+      </div>
+  
+  
+      <div class="row section mb-3" style="display:block">
+  
+        <div class="col-12 text-center my-3">
+  
+  
+          <div class="invoicelist-body">
+            <table>
+              <thead>
+                <th class="custom-thead">Remitente</th>
+                <th class="custom-thead">Tipo</th>
+                <th class="custom-thead">Forma de pago </th>
+              </thead>
+  
+              <tbody>
+                <tr *ngFor="let d of DestinatariosTransferencia">
+                  <td class="text-center"><span>{{Transferencia.Remitente}}</span></td>
+                  <td class="text-center"><span>{{Transferencia.Tipo_Transferencia}}</span></td>
+                  <td class="text-center"><span>{{Transferencia.Forma_Pago}}</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+  
+  
+        </div>
+      </div>
+  
+      <div class="col-md-12">
+        <div class="form-group">
+          <label class="font-weight-bold">Observaciones</label>
+          <label class="block-element">{{Transferencia.Observacion_Transferencia}}</label>
+        </div>
+      </div>
+  
+      <div class="invoicelist-body">
+        <table>
+          <thead>
+            <th class="custom-thead">Identificacion</th>
+            <th class="custom-thead">Nombre</th>
+            <th class="custom-thead">Cuenta Destinatario</th>
+            <th class="custom-thead">Transferido</th>
+          </thead>
+          <tbody>
+            <tr *ngFor="let d of DestinatariosTransferencia">
+              <td class="text-center"><span>{{d.Id_Destinatario}}</span></td>
+              <td class="text-center"><span>{{d.Nombre_Destinatario}}</span></td>
+              <td class="text-center"><span>{{d.Numero_Cuenta_Destinatario}}</span></td>
+              <td class="text-right">
+                <span>
+                  {{d.Valor_Transferencia | customcurrency:Transferencia.Codigo_Moneda_Destino}}
+                </span>
+              </td>
+  
+            </tr>
+          </tbody>
+        </table>
+      </div>
+  
+      <div class="invoicelist-footer">
+        <table>
+          <tr class="taxrelated">
+            <td>Recibido: </td>
+            <td>{{Transferencia.Cantidad_Recibida | customcurrency:Transferencia.Codigo_Moneda_Origen}}
+            </td>
+          </tr>
+          <tr class="taxrelated">
+            <td>Tasa: </td>
+            <td>{{Transferencia.Tasa_Cambio}}</td>
+          </tr>
+          <tr>
+            <td><strong>Transferido:</strong></td>
+            <td id="total_price">
+              {{Transferencia.Monto_Transferido | customcurrency:Transferencia.Codigo_Moneda_Destino}}
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div> -->
+
+
+<!-- <div class="form-row"> -->
+<!-- <div class="col-md-3"> -->
+<!-- <div class="form-group"> -->
+<!-- <label class="font-weight-bold" style="font-size: 0.8em;">{{infoCompany.Nombre_Empresa}}</label>
+        <label class="font-weight-bold" style="font-size: 0.8em;">{{infoCompany.NIT}}</label>
+        <label class="font-weight-bold" style="font-size: 0.8em;">{{infoCompany.Direccion}}</label>
+        <label class="font-weight-bold" style="font-size: 0.8em;">{{infoCompany.Telefono}}</label>
+        <label class="font-weight-bold" style="font-size: 0.8em;">{{infoCompany.Celular}}</label> -->
+<!-- <label class="block-element">{{Transferencia.Fecha}}</label> -->
+<!-- </div> -->
+<!-- </div> -->
+<!-- <div class="col-md-3">
+            <div class="form-group">
+              <label class="font-weight-bold">Forma de pago</label>
+              <label class="block-element">{{Transferencia.Forma_Pago}}</label>
+            </div>
+          </div> -->
+<!-- <div class="col-md-3">
+            <div class="form-group">
+              <label class="font-weight-bold">Tipo</label>
+              <label class="block-element">{{Transferencia.Tipo_Transferencia}}</label>
+            </div>
+          </div> -->
+<!-- <div class="col-md-3" *ngIf="Transferencia.Tipo_Transferencia == 'Cliente'">
+            <div class="form-group">
+              <label class="font-weight-bold">Enviado a:</label>
+              <label class="block-element">{{Transferencia.Cliente_Transferencia}}</label>
+            </div>
+          </div> -->
+<!-- </div> -->
+
+
+
+
+
+
+<!-- <div class="form-row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="font-weight-bold">Remitente</label>
+              <label class="block-element">{{Transferencia.Remitente}}</label>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="font-weight-bold">Hecho por:</label>
+              <label class="block-element">{{Transferencia.Cajero}}</label>
+            </div>
+          </div>
+        </div> -->
+<!-- <div class="form-row">
+          <div class="col-md-3">
+            <div class="form-group">
+              <label class="font-weight-bold">Recibido</label>
+              <label class="block-element">{{Transferencia.Cantidad_Recibida | customcurrency:Transferencia.Codigo_Moneda_Origen}}</label>
+            </div>
+          </div>
+          <div class="col-md-4" *ngIf="Transferencia.Codigo_Moneda_Destino != '$'">
+            <div class="form-group">
+              <label class="font-weight-bold">Transferido</label>
+              <label class="block-element">{{Transferencia.Monto_Transferido | customcurrency:Transferencia.Codigo_Moneda_Destino}}</label>
+            </div>
+          </div>
+          <div class="col-md-2" *ngIf="Transferencia.Codigo_Moneda_Destino != '$'">
+            <div class="form-group">
+              <label class="font-weight-bold">Tasa</label>
+              <label class="block-element">{{Transferencia.Tasa_Cambio}}</label>
+            </div>
+          </div>
+          <div class="col-md-3" *ngIf="Transferencia.Codigo_Moneda_Destino != '$'">
+            <div class="form-group">
+              <label class="font-weight-bold">Costo Transferencia</label>
+              <label class="block-element">{{'0' | customcurrency}}</label>
+            </div>
+          </div>
+        </div> -->
+<!-- <div class="form-row" *ngIf="Transferencia.Cantidad_Recibida_Bolsa_Bolivares != '0'">
+          <div class="col-md-3">
+            <div class="form-group">
+              <label class="font-weight-bold">Cupo Bolivares Usado</label>
+              <label class="block-element">{{Transferencia.Cantidad_Recibida_Bolsa_Bolivares | customcurrency:Transferencia.Codigo_Moneda_Destino}}</label>
+            </div>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label class="font-weight-bold">Observaciones</label>
+              <label class="block-element">{{Transferencia.Observacion_Transferencia}}</label>
+            </div>
+          </div>
+        </div>
+        <div class="form-row"  *ngIf="Transferencia.Tipo_Transferencia != 'Cliente'">
+          <div class="col-md-12">
+            <hr>
+            <div class="text-center">
+              <h4>Destinatarios</h4>
+            </div>
+            <div *ngFor="let d of DestinatariosTransferencia" class="form-row">
+              <div class="col-md-2">
+                <div class="form-group">
+                  <label class="font-weight-bold">Identificacion</label>
+                  <label class="block-element">{{d.Id_Destinatario}}</label>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label class="font-weight-bold">Nombre</label>
+                  <label class="block-element">{{d.Nombre_Destinatario}}</label>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label class="font-weight-bold">Cuenta Destino</label>
+                  <label class="block-element">{{d.Numero_Cuenta_Destinatario}}</label>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="form-group">
+                  <label class="font-weight-bold">Transferido</label>
+                  <label class="block-element">{{d.Valor_Transferencia | customcurrency:Transferencia.Codigo_Moneda_Destino}}</label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div> -->
+<!-- <table class="table table-hover table-sm table-striped">
+          <thead>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of EncabezadoRecibo">
+                <td>Fecha</td>
+                <td>{{ item.Fecha }}</td>
+                <td>Tipo Transferencia </td>
+                <td colspan="3" style="text-align: center;">{{ item.Forma_Pago }} - {{ item.Tipo_Transferencia }} </td>
+            </tr>
+            <tr *ngFor="let item of EncabezadoRecibo">
+                <td>Total Pesos</td>
+                <td>{{ item.Cantidad_Recibida | currency }}</td>
+                <td>Total Bolivar</td>
+                <td>{{item.Cantidad_Transferida | currency: "BsS."}}</td>
+                <td>Al Cambio</td>
+                <td>{{ item.Tasa_Cambio}}</td>
+            </tr>
+            <tr>
+                <td> {{ TituloModalTransferencia }} </td>
+                <td colspan="5"> {{NombreTercero}} </td>
+            </tr>
+            <tr>
+                <td colspan="6"> </td>
+            </tr>
+            <tr *ngIf="itemDestinatario">
+                <td colspan="6" style="text-align: center;font-weight: bold;"> Destinatarios</td>
+            </tr>
+            <tr *ngFor="let item1 of DestinatarioRecibo">
+                <td colspan="2">{{ item1.Nombre }}</td>
+                <td colspan="2">{{ item1.Numero_Cuenta }}</td>
+                <td colspan="2">{{ item1.Valor_Transferencia_Bolivar | currency: "BsS." }}</td>
+            </tr>
+            <tr>
+                <td colspan="6"> </td>
+            </tr>
+            <tr>
+                <td colspan="6" style="text-align: center;font-weight: bold;"> Observaciones del recibo </td>
+            </tr>
+            <tr *ngFor="let item of EncabezadoRecibo">
+                <td colspan="6">{{item.Observacion_Transferencia}}</td>
+            </tr>
+          </tbody>
+        </table> -->
+<!-- </div> -->

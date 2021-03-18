@@ -1,0 +1,140 @@
+<app-modal-basic style="padding: 500px!important;" [dialogClass]="'modal-lg'" id="ModalDestinatario" #ModalDestinatario>
+    <div class="app-modal-header">
+        <h4>Destinatario</h4>
+        <button type="button" class="close basic-close" (click)="CerrarModal()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    </div>
+    <div class="app-modal-body">
+        <form #FormCrearDestinatario="ngForm">
+            <div class="row">
+
+                <div class="col-md-2">
+                    <label>País</label>
+                    <div class="form-group">
+                        <select [(ngModel)]="DestinatarioModel.Id_Pais" class="form-control" id="Pais_Destinatario" name="Id_Pais" required (change)="FiltrarDatosNacionalidad()" [disabled]="Editar">
+                        <option value="null">Seleccione pais</option>
+                        <!-- Se agrega select a  cuentas asociadas -->
+                        <option *ngFor=" let p of Paises; let i=index" [value]="p.Id_Pais">{{p.Nombre}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <label>Identificación</label>
+                    <div class="form-group input-group input-group-button">
+                        <input class="form-control input-hover" id="Id_Destinatario" name="Id_Destinatario" type="text" placeholder="Identificación Destinatario" (blur)="ValidarCedula()" [disabled]="Editar" [(ngModel)]="DestinatarioModel.Id_Destinatario " required [disabled]="(DestinatarioModel.Id_Pais == '0')">
+                        <button class="btn btn-default btn-xs" type="button" style="margin:0;margin-left: 2px;" (click)="generalService.searchRiff()">
+              Riff
+            </button>
+                        <button *ngIf="DestinatarioModel.Tipo_Documento == 'V'" class="btn btn-default btn-xs" type="button" style="margin:0; margin-left: 2px;" (click)="generalService.searchCne()">
+              CNE
+            </button>
+
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>Tipo Doc.</label>
+                        <select [(ngModel)]="DestinatarioModel.Tipo_Documento" class="form-control" id="Tipo_Documento" name="Tipo_Documento" required [disabled]="DestinatarioModel.Id_Pais == '0' || Editar">
+              <option value="">Seleccione Tipo Documento</option>
+              <option *ngFor="let documento of TiposDocumento; let i=index" [value]="documento.Codigo">
+                {{documento.Codigo}}</option>
+            </select>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Nombre</label>
+                        <input class="form-control" name="Nombre" type="text" placeholder="Nombre Destinatario" maxlength="40" onkeypress="return event.charCode >= 65  && event.charCode <= 90 || event.charCode >= 97 && event.charCode <= 122 || event.charCode == 32" [(ngModel)]="DestinatarioModel.Nombre"
+                            required [disabled]="DestinatarioModel.Id_Destinatario == '' && DestinatarioModel.Tipo_Documento == ''">
+                    </div>
+                </div>
+            </div>
+            <br>
+        </form>
+        <br>
+        <div class="row">
+            <div class="col-md-6">
+                <h3>Cuentas Asociadas</h3>
+            </div>
+            <div class="col-md-6" style="text-align:right;">
+                <button class="btn btn-light" (click)="AgregarOtraCuenta()">
+          Agregar Cuenta <i class="ti-plus"></i>
+        </button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="table-responsive">
+                    <table class="table  invoice-detail-table">
+                        <thead>
+                            <tr>
+                                <th scope="col">País</th>
+                                <th colspan="2" scope="col">Numero de Cuenta</th>
+                                <th scope="col">Tipo de Cuenta</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of Lista_Cuentas_Destinatario; let i = index" id="fila{{i}}">
+                                <td width="15%">
+                                    <select class="form-control" id="Id_Pais{{i}}" disabled="true" name="Id_Pais{{i}}" [(ngModel)]="item.Id_Pais" (change)="GetBancosPais(i);" required>
+                    <option value="">Seleccione País</option>
+                    <!-- Se agrega select a  cuentas asociadas -->
+                    <option *ngFor="let Pais of Paises; let i=index" [value]="Pais.Id_Pais">{{Pais.Nombre}}</option>
+                  </select>
+
+                                </td>
+                                <td width="25%">
+                                    <input [disabled]="Lista_Cuentas_Destinatario[i].Id_Pais == 0" class="form-control" name="Numero_Cuenta{{i}}" type="text" [(ngModel)]="item.Numero_Cuenta" (blur)="codigoBanco(i,'input')" (change)="validarBanco(i,$event.target.value)" required mask="0000-0000-0000-0000-0000">
+                                </td>
+                                <td width="20%">
+                                    <select [disabled]="Lista_Cuentas_Destinatario[i].Id_Pais == 0 || item.EsVenezolana" class="form-control" id="Id_Banco{{i}}" name="Id_Banco{{i}}" [(ngModel)]="item.Id_Banco" required (change)="SetIdentificadorCuenta($event.target.value, i)">
+                    <option value="" selected>Seleccione Banco</option>
+                    <option *ngFor="let bc of Lista_Cuentas_Destinatario[i].Bancos; let i=index" [value]="bc.Id_Banco">
+                      {{bc.Apodo}}</option>
+                  </select>
+                                </td>
+                                <td width="15%">
+                                    <select [disabled]="Lista_Cuentas_Destinatario[i].Id_Pais == 0" class="form-control" name="Tipo_Cuenta{{i}}" [(ngModel)]="item.Id_Tipo_Cuenta" required>
+                    <option value="">Seleccione Tipo</option>
+                    <option *ngFor="let tp of TiposCuenta; let i=index" [value]="tp.Id_Tipo_Cuenta">{{tp.Nombre}}
+                    </option>
+                  </select>
+                                </td>
+                                <td class="text-center" style="width:5%;">
+                                    <i class="ti-trash" style="color:red; cursor: pointer;" (confirm)="EliminarCuentaDestinatario(i)" [swal]="{title : 'Eliminar Cuenta Bancaria', text: '¿Está seguro de querer eliminar esta cuenta?' , type : 'error', showCancelButton : true , confirmButtonText: 'Sí, eliminar',cancelButtonText: '¡No, déjame comprobar!'}">
+                  </i>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="app-modal-footer">
+        <div class="text-right">
+            <button class="btn btn-outline-danger btn-rounded btn-sm" (click)="CerrarModal()">Cerrar</button>
+            <button id="BotonGuardarDestinatario" class="btn btn-outline-primary btn-rounded btn-sm" [disabled]="!FormCrearDestinatario.valid" [swal]="{title : '¿Está Seguro?', text: MensajeGuardar , type : 'warning', showCancelButton : true , confirmButtonText: 'Si, Guardar',cancelButtonText: 'No,Dejame Comprobar!'}"
+                (confirm)="GuardarDestinatario()">{{Editar ? 'Actualizar' : 'Guardar'}}
+      </button>
+        </div>
+    </div>
+</app-modal-basic>
+
+<app-modal-basic [dialogClass]="'modal-lg'" id="ModalDestinatario" #ModalCNE hideFooter="true">
+    <div class="app-modal-header">
+        <h4>CNE</h4>
+        <button type="button" class="close basic-close" (click)="ModalCNE.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    </div>
+    <div class="app-modal-body">
+        <div class="row">
+            <div class="col-md-12">
+                <!--    <iframe [src]="urlCNE | safe" frameborder="0" style="width:100%;border:0;" height="400" scrolling="no"></iframe> -->
+            </div>
+        </div>
+    </div>
+</app-modal-basic>

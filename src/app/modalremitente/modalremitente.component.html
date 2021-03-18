@@ -1,0 +1,38 @@
+<app-modal-basic #ModalRemitente>
+    <div class="app-modal-header">
+        <h4 class="modal-title titulo">{{tipo}}</h4>
+        <button type="button" class="close basic-close" (click)="CerrarModal()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    </div>
+    <div class="app-modal-body">
+        <form #FormRemitente="ngForm">
+            <div class="form-row">
+                <div class="col-md-4">
+                    <label>Número Documento</label>
+                    <input *ngIf="!Editar" type="text" name="Id_Transferencia_Remitente" id="Id_Transferencia_Remitente" class="form-control" [(ngModel)]="RemitenteModel.Id_Transferencia_Remitente" required currencyMask [options]="{thousands: '.' , decimal: '.' , precision:'0'}"
+                        disabled>
+                    <label *ngIf="Editar" class="block-element">{{RemitenteModel.Id_Transferencia_Remitente}}</label>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-md-6">
+                    <label for="nombre">Nombre</label>
+                    <input type="text" name="Nombre" id="nombre" class="form-control" [(ngModel)]="RemitenteModel.Nombre" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="telefono">Telefono</label>
+                    <input type="text" name="Telefono" id="telefono" class="form-control" [(ngModel)]="RemitenteModel.Telefono" required>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="app-modal-footer">
+        <div class="text-right">
+            <button type="button" class="btn btn-outline-danger btn-rounded btn-xs" (click)="CerrarModal()">Cancelar</button>
+            <button type="button" class="btn btn-outline-primary btn-rounded btn-xs" [swal]="{title:'¿Está Seguro?',text : 'Se van a actualizar los datos de este registro' , type:'warning', showCancelButton: true, confirmButtonText: 'Si, Actualizar', cancelButtonText:'No, Comprobar!'}"
+                (confirm)="GuardarRemitente()" [disabled]="!FormRemitente.valid">Guardar
+      </button>
+        </div>
+    </div>
+</app-modal-basic>
